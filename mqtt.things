@@ -1,0 +1,33 @@
+Bridge mqtt:broker:mosquitto "Mosquitto" [ host="192.168.2.50", port=1883, secure=false, username="", password="", clientID="openHAB2" ]
+{
+    /* Nefit Easy 
+    Idx     Hardware ID Unit Name                   Type            SubType         Data 
+    2638	Nefit Easy	Nefit Setpoint	            Thermostat	    SetPoint	    20.0
+    2639	Nefit Easy	Nefit Room Temperature	    Temp	        LaCrosse TX3	18.3 C
+    2640	Nefit Easy	Nefit Clock Mode	        Lighting 2	    AC	            Off
+    2641	Nefit Easy	Nefit Hot Water	            Lighting 2	    AC	            On
+    2642	Nefit Easy	Nefit Flow Temperature	    Temp	        LaCrosse TX3	84.6 C
+    2643	Nefit Easy	Nefit Pressure	            General	        Pressure	    1.8 Bar
+    2644	Nefit Easy	Nefit Outside Temperature	Temp	        LaCrosse TX3	0.0 C
+    2645	Nefit Easy	Nefit Boiler Status	        General	        Text	        central heating
+    2646	Nefit Easy	Nefit Display Code	        General	        Text	        central heating active
+    2647	Nefit Easy	Nefit Gas       	        P1 Smart Meter	Gas	            309.440
+    */
+    Thing topic nefitEasy "Nefit Easy" @ "Some Room" {
+    Channels:
+        Type number : setpoint "Setpoint Temperature"    [ stateTopic="domoticz/out/idx/2638", transformationPattern="JSONPATH:$.svalue1"]
+        Type number : roomtemperature "Room Temperature" [ stateTopic="domoticz/out/idx/2639", transformationPattern="JSONPATH:$.svalue1"]
+        Type switch : clockmode "Clock Mode"             [ stateTopic="domoticz/out/idx/2640", transformationPattern="JSONPATH:$.nvalue"]
+        Type switch : hotwater "Hot Water"               [ stateTopic="domoticz/out/idx/2641", transformationPattern="JSONPATH:$.nvalue"]
+        Type number : flowtemperature "Flow Temperature" [ stateTopic="domoticz/out/idx/2642", transformationPattern="JSONPATH:$.svalue1"]
+        Type number : pressure "Pressure"                [ stateTopic="domoticz/out/idx/2643", transformationPattern="JSONPATH:$.svalue1"]
+        Type number : outsidetemperature "Outside Temperature" [ stateTopic="domoticz/out/idx/2644", transformationPattern="JSONPATH:$.svalue1"]
+        Type string : boilerstatus "Boiler Status"       [ stateTopic="domoticz/out/idx/2645", transformationPattern="JSONPATH:$.svalue1"]
+        Type string : displaycode "Display Code"         [ stateTopic="domoticz/out/idx/2646", transformationPattern="JSONPATH:$.svalue1"]
+        Type number : gas "Gas"                          [ stateTopic="domoticz/out/idx/2647", transformationPattern="JSONPATH:$.svalue1"]
+        
+//        Type switch : power     "Power"                  [ stateTopic="stat/sonoff-s20/POWER", commandTopic="cmnd/sonoff-s20/POWER" ]
+//        Type dimmer   : dimmer     "Dimmer"               [ stateTopic="tele/sonoff-b1/STATE", commandTopic="cmnd/sonoff-b1/DIMMER", transformationPattern="JSONPATH:$.Dimmer" ]
+//        Type colorHSB : colour     "Colour"               [ stateTopic="tele/sonoff-b1/STATE", commandTopic="cmnd/sonoff-b1/HSBColor", transformationPattern="JSONPATH:$.HSBColor" ]
+    }
+}
